@@ -5,8 +5,12 @@ import time
 import math
 import numpy as np
 
+# print python version
+print("Python version: " + sys.version)
+
 sys.path.append('../lib/python/amd64')
 import robot_interface as sdk
+
 
 def jointLinearInterpolation(initPos, targetPos, rate):
 
@@ -109,6 +113,9 @@ if __name__ == '__main__':
             cmd.motorCmd[d['FR_2']].Kd = Kd[2]
             cmd.motorCmd[d['FR_2']].tau = 0.0
             # cmd.motorCmd[d['FR_2']].tau = 2 * sin(t*freq_rad)
+
+            print("Foot Forces: FR", state.footForce[0], "FL", state.footForce[1], "RR", state.footForce[2], "RL", state.footForce[3])
+            print("Foot Forces Estimates: FR", state.footForceEst[0], "FL", state.footForceEst[1], "RR", state.footForceEst[2], "RL", state.footForceEst[3])
 
 
         if(motiontime > 10):

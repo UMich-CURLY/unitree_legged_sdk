@@ -62,7 +62,7 @@ void Custom::RobotControl()
     motiontime++;
     udp.GetRecv(state);
     // printf("%d  %f\n", motiontime, state.motorState[FR_2].q);
-    printf("%d  %f  %f\n", motiontime, state.motorState[FR_1].q, state.motorState[FR_1].dq);
+    // printf("%d  %f  %f\n", motiontime, state.motorState[FR_1].q, state.motorState[FR_1].dq);
 
     // gravity compensation
     cmd.motorCmd[FR_0].tau = -0.65f;
@@ -123,6 +123,11 @@ void Custom::RobotControl()
         cmd.motorCmd[FR_2].Kd = Kd[2];
         cmd.motorCmd[FR_2].tau = 0.0f;
 
+        std::cout << "FR: " << state.footForce[0] << " , FR_est: " << state.footForceEst[0] <<std::endl;
+        std::cout << "FL: " << state.footForce[1] << " , FL_est: " << state.footForceEst[1] <<std::endl;
+        std::cout << "RR: " << state.footForce[2] << " , RR_est: " << state.footForceEst[2] <<std::endl;
+        std::cout << "RL: " << state.footForce[3] << " , RL_est: " << state.footForceEst[3] <<std::endl;
+        
     }
 
     if(motiontime > 10){

@@ -35,10 +35,13 @@ target_link_libraries(example_walk ${EXTRA_LIBS})
 add_executable(example_joystick example/example_joystick.cpp)
 target_link_libraries(example_joystick ${EXTRA_LIBS})
 
+add_executable(example_data example/example_data.cpp)
+target_link_libraries(example_data ${EXTRA_LIBS})
+
 
 # install
 install(TARGETS
-  example_position example_velocity example_torque example_walk example_joystick
+  example_position example_velocity example_torque example_walk example_joystick example_data
   DESTINATION bin/unitree)
 install(DIRECTORY lib/cpp/${ARCH}/
   DESTINATION lib/unitree
