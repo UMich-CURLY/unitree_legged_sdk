@@ -3,7 +3,7 @@ project(unitree_legged_sdk)
 
 include_directories(include)
 
-add_compile_options(-std=c++14)
+add_compile_options(-std=c++17)
 
 # check arch and os
 message("-- CMAKE_SYSTEM_PROCESSOR: ${CMAKE_SYSTEM_PROCESSOR}")
@@ -35,13 +35,13 @@ target_link_libraries(example_walk ${EXTRA_LIBS})
 add_executable(example_joystick example/example_joystick.cpp)
 target_link_libraries(example_joystick ${EXTRA_LIBS})
 
-add_executable(example_data example/example_data.cpp)
-target_link_libraries(example_data ${EXTRA_LIBS})
+add_executable(collect_data example/collect_data.cpp)
+target_link_libraries(collect_data ${EXTRA_LIBS})
 
 
 # install
 install(TARGETS
-  example_position example_velocity example_torque example_walk example_joystick example_data
+  example_position example_velocity example_torque example_walk example_joystick collect_data
   DESTINATION bin/unitree)
 install(DIRECTORY lib/cpp/${ARCH}/
   DESTINATION lib/unitree

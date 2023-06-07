@@ -64,18 +64,21 @@ def main():
 
 
     # Read the data from the log file where the values are separated by a || and do not read the last column
-    data = pd.read_csv(log_file, sep=' ', header=None, skiprows=1, engine='python', names=feet_order)
+    data = pd.read_csv(log_file, sep=' ', header=None, skiprows=1, engine='python', names=header)
 
 
     # data.to_csv('file.csv')
     # get the indices where the contact is true for each leg
-    del data['\n']
     del header[-1]
+
+    print(header)
     print(data)
+    
     plt.figure()
     for i in range(4):
         plt.subplot(2, 2, i+1)
-        plt.plot(data['time'][5000:6000]*0.002, data[feet_order[i+1]][5000:6000])
+        # plt.plot(data['time'][5000:6000]*0.002, data[feet_order[i+1]][5000:6000])
+        plt.plot(data['time'], data[feet_order[i+1]])
         plt.ylabel('Force (N)')
         plt.xlabel('time')
         plt.title('Force on foot ' + feet_order[i+1])
@@ -83,6 +86,20 @@ def main():
         plt.savefig(save_path + '/' + save_name + '_' + feet_order[i+1] + '.' + save_format)
     if show == 'yes':
         plt.show()
+
+    # plot the imu acc data for the x, y, and z axis
+    # plt.figure()
+    # for i in range(3):
+    #     plt.subplot(3, 1, i+1)
+    #     plt.plot(data['time']*0.002, data[header[i+1]])
+    #     plt.ylabel('Acceleration (m/s^2)')
+    #     plt.xlabel('time')
+    #     plt.title('Acceleration on axis ' + header[i+1])
+    # if save == 'yes':
+    #     plt.savefig(save_path + '/' + save_name + '_' + 'imu_acc' + '.' + save_format)
+    # if show == 'yes':
+    #     plt.show()
+
 
 
 if __name__ == '__main__':
