@@ -19,7 +19,8 @@ class Custom
 public:
     Custom(uint8_t level): 
         safe(LeggedType::Go1), 
-        udp(level, 8090, "192.168.123.10", 8007) {
+        // udp(level, 8090, "192.168.123.161", 8082){ // High state 
+        udp(level, 8090, "192.168.123.10", 8007) { // Low state
         udp.InitCmdData(cmd);
     }
     void UDPRecv();
@@ -30,8 +31,10 @@ public:
     UDP udp;
     LowCmd cmd = {0};
     LowState state = {0};
+    // HighCmd cmd = {0};
+    // HighState state = {0};
     int motiontime = 0;
-    float dt = 0.002;     // 0.001~0.01
+    float dt = 0.0025;     // 0.001~0.01
 };
 
 void Custom::UDPRecv()
@@ -71,6 +74,18 @@ void Custom::RobotData()
     // Force
     std::cout << state.footForce[0] << " " << state.footForce[1] << " " << state.footForce[2] << " " << state.footForce[3] << std::endl;
 
+    // uncommment if using high state
+    // Foot pos
+    // std::cout << state.footPosition2Body[0].x << " " << state.footPosition2Body[0].y << " " << state.footPosition2Body[0].z << " ";
+    // std::cout << state.footPosition2Body[1].x << " " << state.footPosition2Body[1].y << " " << state.footPosition2Body[1].z << " ";
+    // std::cout << state.footPosition2Body[2].x << " " << state.footPosition2Body[2].y << " " << state.footPosition2Body[2].z << " ";
+    // std::cout << state.footPosition2Body[3].x << " " << state.footPosition2Body[3].y << " " << state.footPosition2Body[3].z << " ";
+
+    // // Foot vel
+    // std::cout << state.footSpeed2Body[0].x << " " << state.footSpeed2Body[0].y << " " << state.footSpeed2Body[0].z << " ";
+    // std::cout << state.footSpeed2Body[1].x << " " << state.footSpeed2Body[1].y << " " << state.footSpeed2Body[1].z << " ";
+    // std::cout << state.footSpeed2Body[2].x << " " << state.footSpeed2Body[2].y << " " << state.footSpeed2Body[2].z << " ";
+    // std::cout << state.footSpeed2Body[3].x << " " << state.footSpeed2Body[3].y << " " << state.footSpeed2Body[3].z << " ";
 }
 
 
@@ -129,7 +144,11 @@ int main(void)
 
     std::cout.rdbuf(logfile.rdbuf());
 
+    // low state
     std::cout << "time q_FL_hip q_FL_thigh q_FL_calf q_FR_hip q_FR_thigh q_FR_calf q_RL_hip q_RL_thigh q_RL_calf q_RR_hip q_RR_thigh q_RR_calf dq_FL_hip dq_FL_thigh dq_FL_calf dq_FR_hip dq_FR_thigh dq_FR_calf dq_RL_hip dq_RL_thigh dq_RL_calf dq_RR_hip dq_RR_thigh dq_RR_calf tau_FL_hip tau_FL_thigh tau_FL_calf tau_FR_hip tau_FR_thigh tau_FR_calf tau_RL_hip tau_RL_thigh tau_RL_calf tau_RR_hip tau_RR_thigh tau_RR_calf IMU_acc_x IMU_acc_y IMU_acc_z IMU_gyro_x IMU_gyro_y IMU_gyro_z FL_force FR_force RL_force RR_force" << std::endl;
+
+    // high state
+    // std::cout << "time q_FL_hip q_FL_thigh q_FL_calf q_FR_hip q_FR_thigh q_FR_calf q_RL_hip q_RL_thigh q_RL_calf q_RR_hip q_RR_thigh q_RR_calf dq_FL_hip dq_FL_thigh dq_FL_calf dq_FR_hip dq_FR_thigh dq_FR_calf dq_RL_hip dq_RL_thigh dq_RL_calf dq_RR_hip dq_RR_thigh dq_RR_calf tau_FL_hip tau_FL_thigh tau_FL_calf tau_FR_hip tau_FR_thigh tau_FR_calf tau_RL_hip tau_RL_thigh tau_RL_calf tau_RR_hip tau_RR_thigh tau_RR_calf IMU_acc_x IMU_acc_y IMU_acc_z IMU_gyro_x IMU_gyro_y IMU_gyro_z FL_force FR_force RL_force RR_force FL_foot_pos_x FL_foot_pos_y FL_foot_pos_z FR_foot_pos_x FR_foot_pos_y FR_foot_pos_z RL_foot_pos_x RL_foot_pos_y RL_foot_pos_z RR_foot_pos_x RR_foot_pos_y RR_foot_pos_z FL_foot_vel_x FL_foot_vel_y FL_foot_vel_z FR_foot_vel_x FR_foot_vel_y FR_foot_vel_z RL_foot_vel_x RL_foot_vel_y RL_foot_vel_z RR_foot_vel_x RR_foot_vel_y RR_foot_vel_z" << std::endl;
 
     while(1){
         sleep(1);

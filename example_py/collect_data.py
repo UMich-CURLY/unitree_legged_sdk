@@ -83,41 +83,19 @@ if __name__ == '__main__':
                     # 'contact_FL' + ' ' + 'contact_FR' + ' ' + 'contact_RL' + ' ' + 'contact_RR' + ' ')
 
 
-    dt = 0.001
+    dt = 0.0025
     while True:
         time.sleep(dt)
         motiontime += 1
         udp.Recv()
         udp.GetRecv(state)
         values = str(round(motiontime*dt, 3)) + ' '
-        ############ q ##################
-        # for i in range(12):
-        #     values += str(round(state.motorState[i].q, 3)) + ' '
-        # # ############## dq ###############
-        # for i in range(12):
-        #     values += str(round(state.motorState[i].dq, 3)) + ' '
-        # ############## tau ##############
-        # for i in range(12):
-        #     values += str(round(state.motorState[i].tauEst, 3)) + ' '
-        # # ############## IMU ##############
-        # for i in range(3):
-        #     values += str(round(state.imu.accelerometer[i], 3)) + ' '
-        # for i in range(3):
-        #     values += str(round(state.imu.gyroscope[i], 3)) + ' '
-        # ############## foot force ##############
-        # for i in range(4):
-        #     values += str(round(state.footForce[i], 3)) + ' '
-        # now do them at the same time in one line
         values += ' '.join([str(round(state.motorState[i].q, 3)) for i in range(12)]) + ' ' + \
                     ' '.join([str(round(state.motorState[i].dq, 3)) for i in range(12)]) + ' ' + \
                     ' '.join([str(round(state.motorState[i].tauEst, 3)) for i in range(12)]) + ' ' + \
                     ' '.join([str(round(state.imu.accelerometer[i], 3)) for i in range(3)]) + ' ' + \
                     ' '.join([str(round(state.imu.gyroscope[i], 3)) for i in range(3)]) + ' ' + \
                     ' '.join([str(round(state.footForce[i], 3)) for i in range(4)]) + ' '
-        
-
-
-
 
         ############## feet height ##############
         # for i in range(4):
